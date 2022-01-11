@@ -51,6 +51,25 @@ import * as Joi from 'joi';
           .default('development')
       }),
     }),
+    //   inject: [ConfigService],
+    //   useFactory: (config: ConfigService) => ({
+    //     type: 'mysql',
+    //     host: config.get<string>(DATABASE_HOST),
+    //    // host: "172.20.0.2",
+    //     port: parseInt(config.get<string>(DATABASE_PORT),10),
+    //     //port: 3306,
+    //     username: config.get<string>(DATABASE_USERNAME),
+    //     password: config.get<string>(DATABASE_PASSWORD),
+    //     database: config.get<string>(DATABASE_NAME),
+    //     entities: [__dirname + "./**/**/*.entity{.ts,.js}"],
+    //     autoLoadEntities: true,
+    //     synchronize: true,
+    //   }) 
+    // }),
+  ConfigModule.forRoot({
+    isGlobal: true,
+    envFilePath: '.env'
+  }),
     UsuarioModule,
     PersonalModule,
     AuthModule,

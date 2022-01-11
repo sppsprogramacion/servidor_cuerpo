@@ -133,20 +133,21 @@ export class ArchivoController {
             throw new Error('El campo fecha del pdf es obligatorio');
            }
 
-           this.res = await this.s3Service.uploadFile(pdf).then();
-           const nameFile: string = this.res['key'];
-           const nuevoPdf: CreateArchivoDto = {
-                         legajo_personal:   parseInt(data_body['legajo'].toString()),
-                         nombre_archivo: nameFile,
-                         detalle: detalle,
-                         indice: indice,
-                         fecha_documento: fecha 
-                     }
+           //guardado de archivo
+          //  this.res = await this.s3Service.uploadFile(pdf).then();
+          //  const nameFile: string = this.res['key'];
+          //  const nuevoPdf: CreateArchivoDto = {
+          //                legajo_personal:   parseInt(data_body['legajo'].toString()),
+          //                nombre_archivo: nameFile,
+          //                detalle: detalle,
+          //                indice: indice,
+          //                fecha_documento: fecha 
+          //            }
                      
-                   await this.archivoService.cargarPDF(nuevoPdf);
+          //          await this.archivoService.cargarPDF(nuevoPdf);
 
 
-            return this.res;
+          //   return this.res;
       } catch (error) {
                     throw new BadRequestException(error.message);        
       }
@@ -167,8 +168,12 @@ export class ArchivoController {
          }
          const key = req.query.key.toString();
          
-         const filePdf = await this.s3Service.s3_getPdf(key);
-         filePdf.pipe(res);
+         //buscar pdf
+        //  const filePdf = await this.s3Service.s3_getPdf(key);
+        //  filePdf.pipe(res);
+
+
+
          //return filePdf;
         
      } catch (error) {

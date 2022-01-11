@@ -105,7 +105,7 @@ async deleteOne(id:number){
 async createOne(data: CreateUserDto){
     
         const existe = await this.usuarioRepository.findOne({correo: data.correo});
-        console.log('USUARIO ENCONTRADO',existe);
+        console.log('USUARIO ENCONTRADO 2',existe);
         if(existe) throw new BadRequestException('El email que intenta utilizar ya se encuentra utilizado!');
         const nuevo = this.usuarioRepository.create(data);
         const creado =  await this.usuarioRepository.save(nuevo);

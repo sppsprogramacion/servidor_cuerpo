@@ -109,17 +109,20 @@ async remove(id: number) {
        }
     const archivo = existe.nombre_archivo;
 
-    return this.s3Service.s3_deletePdf(archivo).then(async resultado => {
-      const respuesta =  await this.archivoRepository.delete(id);
-        return {
-          status: 200,
-          message: 'Se han Eliminado el Registro e Imágen con Exito',
-          detalle: respuesta
-        };
-    })
-                    .catch(error => {
-                        throw new Error('Error al Elliminar el PDF');
-                    });
+    //recuperar pdf s3
+    // return this.s3Service.s3_deletePdf(archivo).then(async resultado => {
+    //   const respuesta =  await this.archivoRepository.delete(id);
+    //     return {
+    //       status: 200,
+    //       message: 'Se han Eliminado el Registro e Imágen con Exito',
+    //       detalle: respuesta
+    //     };
+    // })
+    //                 .catch(error => {
+    //                     throw new Error('Error al Elliminar el PDF');
+    //                 });
+
+    //recuperar pdf local
   //   return fs.unlink(path.join(__dirname,'../../personal-pdf',archivo)).then(async resultado => {
   //       const respuesta =  await this.archivoRepository.delete(id);
   //       return {
