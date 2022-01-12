@@ -138,8 +138,8 @@ async cargarFoto(foto: Express.Multer.File, id: number){
       
     //subiendo la imagen a cloudinary
     console.log("por subir imagen");
-    const foto_subida =  await this.cloudinaryService.uploadImage(foto).catch(() => {
-        throw new BadRequestException('Invalid file type.');
+    const foto_subida =  await this.cloudinaryService.uploadImage(foto).catch((e) => {
+        throw new BadRequestException(e);
         });
     const foto_url: string = foto_subida.url;
     console.log("foto nombre", foto_url);   
