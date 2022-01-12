@@ -122,26 +122,28 @@ async getUserByEmail(correo: string){
                 .getOne()
 }
 
-
-    async cargarFoto(foto: Express.Multer.File, id: number){
+//CARGAR FOTO
+async cargarFoto(foto: Express.Multer.File, id: number){
 
     const user = await this.usuarioRepository.findOne({id_usuario: id});
     if(!user){
         throw new NotFoundException('No existe el usuario al que intenta asignar la imagen');
-       }
+    }
     //veamos si existe una imagen asociada
-       if(user.img !== ""){
-            await this.cloudinaryService.deleteImage(user.img).catch((e) => {
-                    
-               });
-           
-       }
+    if(user.img !== ""){
+        await this.cloudinaryService.deleteImage(user.img).catch((e) => {
+                
+            });        
+    }
       
-        //subiendo la imagen a cloudinary
-        const foto_subida =  await this.cloudinaryService.uploadImage(foto).catch(() => {
-            throw new BadRequestException('Invalid file type.');
-          });
+    //subiendo la imagen a cloudinary
+    console.log("por subir imagen");
+    const foto_subida =  await this.cloudinaryService.uploadImage(foto).catch(() => {
+        throw new BadRequestException('Invalid file type.');
+        });
     const foto_url: string = foto_subida.url;
+    console.log("foto nombre", foto_url);   
+
     let data: EditUserDto = {
         "img": foto_url
     };
@@ -150,6 +152,7 @@ async getUserByEmail(correo: string){
     if(resultado.affected == 0) throw new NotFoundException('No se ha actualizado el campo de imagen');
     return resultado;
 }
+//fin CARGAR FOTO..........................................................................
 
 getFoto(nombre_foto: string){
     try {
