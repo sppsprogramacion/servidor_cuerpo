@@ -10,9 +10,12 @@ export const CloudinaryProvider = {
   provide: CLOUDINARY,
   useFactory: (config: ConfigService) => {
     return v2.config({
-      cloud_name:  config.get<string>(CLOUDINARY_CLOUD_NAME),
-      api_key: config.get<string>(CLOUDINARY_API_KEY),
-      api_secret: config.get<string>(CLOUDINARY_API_SECRET),
+      // cloud_name:  config.get<string>(CLOUDINARY_CLOUD_NAME),
+      // api_key: config.get<string>(CLOUDINARY_API_KEY),
+      // api_secret: config.get<string>(CLOUDINARY_API_SECRET),
+      cloud_name:  'sppsprogramacion',
+      api_key: '186273113389841',
+      api_secret: '6HoZYHofYCCHt-9q_CSzNJOplME',
      // secure: true    
       
     });
