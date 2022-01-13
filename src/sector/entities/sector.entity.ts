@@ -21,4 +21,16 @@ export class  Sector {
         nullable: true
             })
     division_id : number;
-        }
+    
+    @Column({
+        type: "int",
+        nullable: true
+    })
+    departamento_id: number;        
+
+    @Column({
+        type: "int",
+        nullable: true
+    })
+    destino_id: number;
+}

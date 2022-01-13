@@ -21,4 +21,12 @@ export class  Division {
         nullable: true
     })
     departamento_id: number;
-        }
+        
+
+    @Column({
+        type: "int",
+        nullable: true
+    })
+    destino_id: number;
+
+}

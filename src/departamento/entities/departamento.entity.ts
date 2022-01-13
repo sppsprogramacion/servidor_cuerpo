@@ -23,3 +23,5 @@ export class  Departamento {
     destino_id: number;
 
         }
+    
+        
