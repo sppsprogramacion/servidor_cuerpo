@@ -11,4 +11,12 @@ export class CreateSectorDto {
     @IsOptional()
     division_id: number;
 
+    @IsInt()
+    @IsOptional()
+    departamento_id: number;        
+
+    @IsInt()
+    @IsOptional()
+    destino_id: number;
+
 }

@@ -11,4 +11,7 @@ export class CreateDivisionDto {
     @IsOptional()
     departamento_id: number;
     
+    @IsInt()
+    @IsOptional()
+    destino_id: number;
 }
