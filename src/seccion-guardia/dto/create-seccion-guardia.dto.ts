@@ -9,6 +9,6 @@ export class CreateSeccionGuardiaDto {
     
     @IsInt()
     @IsOptional()
-    departamento_id: number;
+    sector_id: number;
 
 }

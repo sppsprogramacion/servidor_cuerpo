@@ -20,5 +20,5 @@ export class  SeccionGuardia {
        type: "int",
        nullable: true
     })
-    departamento_id: number;
+    sector_id: number;
         }

@@ -18,7 +18,11 @@ export class DivisionService {
      * @returns 
      */
      async getAll(){
-        return await this.divisionRepository.find();
+        return await this.divisionRepository.find({
+            order:{
+                division: "ASC"
+            }
+        });
     }
 
     /**

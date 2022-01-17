@@ -59,7 +59,7 @@ export class SeccionGuardiaService {
      async createOne(data: CreateSeccionGuardiaDto){
         const existe = await this.seccionRepository.findOne({
             seccion: data.seccion,
-            departamento_id: data.departamento_id
+            sector_id: data.sector_id
         });
         if(existe) throw new BadRequestException("El registro que intenta crear ya existe");
         const nuevo = this.seccionRepository.create(data);

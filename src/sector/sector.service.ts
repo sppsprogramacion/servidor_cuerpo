@@ -18,7 +18,11 @@ export class SectorService {
      */
     async getMany(){
         try {
-           return await this.sectorRepository.find();
+           return await this.sectorRepository.find({
+            order:{
+                sector: "ASC"
+            }
+        });
             
         } catch (error) {
             throw new BadRequestException(error.message);

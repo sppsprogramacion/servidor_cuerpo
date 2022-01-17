@@ -17,7 +17,13 @@ export class DestinoService {
      * @returns 
      */
       async getAll(){
-        return await this.destinoRepository.find();
+        return await this.destinoRepository.find(
+            {
+                order:{
+                    destino: "ASC"
+                }
+            }
+        );
     }
 
     /**

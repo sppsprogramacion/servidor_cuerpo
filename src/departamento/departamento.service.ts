@@ -18,7 +18,11 @@ export class DepartamentoService {
      * @returns 
      */
      async getAll(){
-        return await this.departamentoRepository.find();
+        return await this.departamentoRepository.find({
+            order:{
+                departamento: "ASC"
+            }
+        });
     }
 
     /**

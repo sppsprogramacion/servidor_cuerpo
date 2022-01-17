@@ -16,6 +16,7 @@ import { NivelEducativo } from '../../nivel-educativo/entities/nivel-educativo.e
 import { Provincia } from '../../provincia/entities/provincia.entity';
 import { Situacion } from '../../situacion/entities/situacion.entity';
 import { Archivo } from "src/archivo/entities/archivo.entity";
+import { Funcion } from "src/funcion/entities/funcion.entity";
 
 /**
  * Tabla que contiene los datos de todo el personal penitenciario 
@@ -201,12 +202,18 @@ export class  Personal {
     })
     seccion_guardia: SeccionGuardia
 
+    
     @Column({
-        type: "varchar",
-        length: 200,
-        nullable: true
-             })
-    funcion : string;
+        type: "int",
+          })
+    funcion_id: number;
+
+    @ManyToOne(type => Funcion,{eager : true})
+    @JoinColumn({
+        name : 'funcion_id',
+        referencedColumnName : 'id_funcion'
+    })
+    funcion : Funcion;
 
     @Column({
         type: "int",
