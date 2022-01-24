@@ -3,7 +3,7 @@ import { TrasladoService } from './traslado.service';
 import { CreateTrasladoDto } from './dto/create-traslado.dto';
 import { EditTrasladoDto } from './dto/edit-traslado.dto';
 import { get } from 'http';
-import { isInt, IsString } from 'class-validator';
+
 
 @Controller('traslado')
 export class TrasladoController {
@@ -19,19 +19,17 @@ export class TrasladoController {
     @Get('/legajo/:legajo')
     async getTrasladosXLegajo(        
         @Param('legajo')
-        legajo: string
-    ){
+        legajo: number
+    ){        
         let legajox:number=0;
-        if(typeof legajo==='number' && (legajo%1)===0) {
-            legajox = parseInt(legajo);
+        
+        if(Number.isInteger(legajo)){
+            legajox = legajo;
         }
-        
         else{
-            throw new NotFoundException('Debe proporcionar un valor entero para el Legajo');
-        }       
-        
-        console.log("traslado en servicio", legajo);
-        console.log("traslado en servicio legajox", legajox);
+            throw new NotFoundException('Debe proporcionar un numero entero para el Legajo');
+        }    
+                
         return await this.trasladoService.getTrasladosXLegajo(legajox);
     }
 

@@ -30,7 +30,7 @@ export class TrasladoService {
 
     async getTrasladosXLegajo(legajox: number){
         try {
-           return await this.trasladoRepository.find({
+           return await this.trasladoRepository.findAndCount({
             where: [{legajo: legajox}],
             order:{
                 fecha: "ASC"
