@@ -15,9 +15,23 @@ export class TrasladoService {
     /**
      * Servicio get que devuelve los registros de la tabla Sector
      */
-    async getMany(){
+    async getAll(){
         try {
            return await this.trasladoRepository.find({
+            order:{
+                fecha: "ASC"
+            }
+        });
+            
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+
+    async getTrasladosXLegajo(legajox: number){
+        try {
+           return await this.trasladoRepository.find({
+            where: [{legajo: legajox}],
             order:{
                 fecha: "ASC"
             }
