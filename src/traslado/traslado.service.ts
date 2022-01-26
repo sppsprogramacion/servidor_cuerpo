@@ -33,7 +33,7 @@ export class TrasladoService {
            return await this.trasladoRepository.findAndCount({
             where: [{legajo: legajox}],
             order:{
-                fecha: "ASC"
+                id_traslado: "DESC"
             }
         });
             
@@ -66,11 +66,23 @@ export class TrasladoService {
      */
     async editOne(id: number, data: EditTrasladoDto){
         try {
+            //return this.trasladoRepository.update(id, data);
             return this.trasladoRepository.update(id, data);
         } catch (error) {
               throw new BadRequestException(error.message);
         }
     }
+
+    //QUITAR TRASLADO VIGENTE
+    async quitarTrasladoVigente(legajox: number, data: EditTrasladoDto){
+        try {
+            return this.trasladoRepository.update({legajo:legajox},data)
+
+        } catch (error) {
+              throw new BadRequestException(error.message);
+        }
+    }
+    //FIN QUITAR TRASLADO VIGENTE
 
     /**
      * Servicio que crea un nuevo registro de la tabla Sector

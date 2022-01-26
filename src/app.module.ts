@@ -32,6 +32,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { S3Module } from './s3/s3.module';
 import { FuncionModule } from './funcion/funcion.module';
 import { TrasladoModule } from './traslado/traslado.module';
+import { PersonalFuncionModule } from './personal-funcion/personal-funcion.module';
 import databaseConfig from './config/database.config';
 import * as Joi from 'joi';
 
@@ -97,6 +98,7 @@ import * as Joi from 'joi';
     S3Module,
     FuncionModule,
     TrasladoModule,
+    PersonalFuncionModule,
   //  MulterModule
   ],
   controllers: [AppController],

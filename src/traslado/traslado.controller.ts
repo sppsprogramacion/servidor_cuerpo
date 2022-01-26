@@ -59,6 +59,16 @@ export class TrasladoController {
         return await this.trasladoService.editOne(id, data);
     }
 
+    @Put('/quitar/:legajo')
+    async quitarTrasladoVigente(
+        @Param('legajo', ParseIntPipe)
+        legajo: number,
+        @Body()
+        data: EditTrasladoDto
+    ){
+        return await this.trasladoService.quitarTrasladoVigente(legajo, data);
+    }
+
     @Delete(':id')
     async deleteOne(
         @Param('id', ParseIntPipe)
