@@ -9,9 +9,7 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToO
 @Entity()
 export class PersonalFuncion {
     @PrimaryGeneratedColumn()
-    id_personal_funcion: number;
-
-    
+    id_personal_funcion: number;    
 
     @Column({
         type: "int"
