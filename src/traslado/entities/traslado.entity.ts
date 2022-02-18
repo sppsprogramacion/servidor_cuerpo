@@ -57,6 +57,11 @@ export class  Traslado {
             })
     vigente: boolean;
 
+    @Column({
+        type: "boolean",
+            })
+    confirmado: boolean;
+
 
    @CreateDateColumn()
    fecha_alta: Date;

@@ -28,5 +28,8 @@ export class CreateTrasladoDto {
     @IsBoolean()
     vigente: boolean;
 
+    @IsBoolean()
+    confirmado: boolean;
+
 
 }
