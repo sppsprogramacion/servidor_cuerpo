@@ -33,6 +33,29 @@ export class TrasladoController {
         return await this.trasladoService.getTrasladosXLegajo(legajox);
     }
 
+    @Get('/nuevos/')
+    async getNuevosTrasladosTodos(){             
+                
+        return await this.trasladoService.getNuevosTrasladosTodos();
+    }
+
+    @Get('/nuevos-organismo/:id_organismo')
+    async getNuevosTrasladosXOrganismo(        
+        @Param('id_organismo')
+        id_organismo: number
+    ){        
+        let organismox:number=0;
+        
+        if(Number.isInteger(id_organismo)){
+            organismox = id_organismo;
+        }
+        else{
+            throw new NotFoundException('Debe proporcionar un numero entero para el Legajo');
+        }    
+                
+        return await this.trasladoService.getNuevosTrasladosXOrganismo(organismox);
+    }
+
     @Get(':id')
     async getOne(
         @Param('id', ParseIntPipe)

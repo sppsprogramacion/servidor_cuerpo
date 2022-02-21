@@ -1,5 +1,6 @@
 import { Destino } from "src/destino/entities/destino.entity";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Personal } from '../../personal/entities/personal.entity';
 
 @Entity('traslado')
 export class  Traslado {
@@ -17,6 +18,13 @@ export class  Traslado {
         type: "int"
            })
     legajo: number;
+
+    @ManyToOne(type => Personal,{eager : true})
+    @JoinColumn({
+        name : 'legajo',
+        referencedColumnName : 'legajo'
+    })
+    personal : Personal;
 
     //DESTINO
     @Column({
@@ -59,6 +67,7 @@ export class  Traslado {
 
     @Column({
         type: "boolean",
+        default:false
             })
     confirmado: boolean;
 

@@ -12,6 +12,7 @@ export class TrasladoService {
         private readonly trasladoRepository: Repository<Traslado>
     ){}
 
+    //LISTADO COMPLETO
     /**
      * Servicio get que devuelve los registros de la tabla Sector
      */
@@ -27,7 +28,9 @@ export class TrasladoService {
             throw new BadRequestException(error.message);
         }
     }
+    //FIN LISTADO COMPLETO.....................................................
 
+    //TRASLADO X LEGAJO
     async getTrasladosXLegajo(legajox: number){
         try {
            return await this.trasladoRepository.findAndCount({
@@ -41,6 +44,39 @@ export class TrasladoService {
             throw new BadRequestException(error.message);
         }
     }
+    //FIN TRASLADO X LEGAJO.......................................................
+
+    //LISTADO NUEVOS TRASLADO TODOS
+    async getNuevosTrasladosTodos(){
+        try {
+           return await this.trasladoRepository.findAndCount({
+            where: [{vigente: true, confirmado: false}],
+            order:{
+                id_traslado: "DESC"
+            }
+        });
+            
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+    //FIN LISTADO NUEVOS TRASLADO TODOS.......................................................
+
+    //LISTADO NUEVOS TRASLADO X ORGANISMO
+    async getNuevosTrasladosXOrganismo(id_organismo: number){
+        try {
+           return await this.trasladoRepository.findAndCount({
+            where: [{destino_id: id_organismo, vigente: true, confirmado: false}],
+            order:{
+                id_traslado: "DESC"
+            }
+        });
+            
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+    }
+    //FIN LISTADO NUEVOS TRASLADO X ORGANISMO.......................................................
 
     /**
      * servicio que devuelve un registro según id
@@ -57,7 +93,9 @@ export class TrasladoService {
             throw new BadRequestException(error.message);
         }
     }
+    //FIN TRASLADO X ID..............................................................
 
+    //EDITAR UN TRASLADO
     /**
      * Servicio que edita los datos de un registro de la tabla Sector
      * @param id 
@@ -72,6 +110,7 @@ export class TrasladoService {
               throw new BadRequestException(error.message);
         }
     }
+    //FIN EDITAR UN TRASLADO.......................................................
 
     //QUITAR TRASLADO VIGENTE
     async quitarTrasladoVigente(legajox: number, data: EditTrasladoDto){
@@ -84,6 +123,8 @@ export class TrasladoService {
     }
     //FIN QUITAR TRASLADO VIGENTE
 
+
+    //CREAR UN TRASLADO
     /**
      * Servicio que crea un nuevo registro de la tabla Sector
      * @param data 
@@ -100,7 +141,9 @@ export class TrasladoService {
         } catch (error) {
             }
     }
+    //FIN CREAR UN TRASLADO...........................................
 
+    //BORRAR UN TRASLADO
     async deleteOne(id: number){
         try {
             const existe = await this.trasladoRepository.findOne(id);
@@ -112,5 +155,6 @@ export class TrasladoService {
             throw new BadRequestException(error.message);
         }
     }
+    //FIN BORRAR UN TRASLADO............................................................
 
 }
