@@ -27,17 +27,17 @@ export class  Municipio {
            })
     departamento_id: number;
 
-    @ManyToOne(type => DepartamentoProvincial)
+    @ManyToOne(type => DepartamentoProvincial,{eager: true})
     @JoinColumn({
         name: "departamento_id",
         referencedColumnName: "id_dpto_prov"
     })
     departamento: DepartamentoProvincial;
 
-    @OneToMany(type => Ciudad,ciudad => ciudad.municipio,{
-        onDelete: "CASCADE",
-        eager: true,
-        cascade: true})
-    ciudades: Ciudad[];
+    // @OneToMany(type => Ciudad,ciudad => ciudad.municipio,{
+    //     onDelete: "CASCADE",
+    //     eager: true,
+    //     cascade: true})
+    // ciudades: Ciudad[];
 
-        }
+}

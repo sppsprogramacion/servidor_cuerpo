@@ -16,11 +16,11 @@ export class  Provincia {
            })
     provincia: string;
 
-    @OneToMany(type => DepartamentoProvincial,departamento => departamento.provincia,{
-        onDelete: "CASCADE",
-        eager: true,
-        cascade: true})
-    departamentos : DepartamentoProvincial[];
+    // @OneToMany(type => DepartamentoProvincial,departamento => departamento.provincia,{
+    //     onDelete: "CASCADE",
+    //     eager: true,
+    //     cascade: true})
+    // departamentos : DepartamentoProvincial[];
 
     
         }
