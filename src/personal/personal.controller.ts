@@ -58,22 +58,40 @@ export class PersonalController {
       }
      }
 
-    @Get('dni')
+    // @Get('dni')
+    // async getByDni(
+    //     @Req()
+    //     req: Request,
+    //     @Res()
+    //     res: Response
+    // ){
+    //     try {
+    //         if(!req.query.dni){
+    //             throw new Error('Debe proporcionar el DNI');
+    //         }else{
+    //             const dni: number = parseInt(req.query.dni.toString());
+    //             const respuesta = await this.personalService.getPersonalByDni(dni);
+    //             res.status(200).json({
+    //                 'data': respuesta
+    //             });
+    //         }
+    //     } catch (error) {
+    //         throw new BadRequestException(error.message);
+    //     }
+    // }
+
+    @Get('/dni/:dni')
     async getByDni(
-        @Req()
-        req: Request,
-        @Res()
-        res: Response
+        @Param('dni',ParseIntPipe)
+        dni:number
     ){
         try {
-            if(!req.query.dni){
+            if(!dni){
                 throw new Error('Debe proporcionar el DNI');
             }else{
-                const dni: number = parseInt(req.query.dni.toString());
-                const respuesta = await this.personalService.getPersonalByDni(dni);
-                res.status(200).json({
-                    'data': respuesta
-                });
+                //const dni: number = parseInt(req.query.dni.toString());
+                return await this.personalService.getPersonalByDni(dni);
+                
             }
         } catch (error) {
             throw new BadRequestException(error.message);
