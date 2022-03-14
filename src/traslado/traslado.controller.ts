@@ -3,12 +3,16 @@ import { TrasladoService } from './traslado.service';
 import { CreateTrasladoDto } from './dto/create-traslado.dto';
 import { EditTrasladoDto } from './dto/edit-traslado.dto';
 import { get } from 'http';
+import { PersonalService } from '../personal/personal.service';
+import { Personal } from 'src/personal/entities/personal.entity';
+import { Traslado } from './entities/traslado.entity';
 
 
 @Controller('traslado')
 export class TrasladoController {
     constructor(
-        private readonly trasladoService: TrasladoService
+        private readonly trasladoService: TrasladoService,
+        private readonly personalService: PersonalService
     ){}
 
     @Get()
@@ -69,6 +73,27 @@ export class TrasladoController {
         @Body()
         data: CreateTrasladoDto
     ){
+        //editar destino en el personal
+        let dataPersonal: Partial<Personal>= new Personal;
+        dataPersonal = {
+            destino_id: data.destino_id,
+            departamento_id: 3,
+            division_id: 1,
+            sector_id: 1,
+            funcion_id: 1,
+            seccion_guardia_id: 1
+        }        
+        
+        this.personalService.editOneXLegajo(data.legajo,dataPersonal);
+        //Fin editar destino en el personal
+
+        let data_aux: Partial<Traslado>= new Traslado;
+        data_aux = {
+            vigente:false
+        }      
+
+        this.trasladoService.quitarTrasladoVigente(data.legajo, data_aux);
+
         return await this.trasladoService.createOne(data);
     }
 

@@ -1,15 +1,20 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { EditTrasladoDto } from './dto';
 import { Traslado } from './entities/traslado.entity';
 import { CreateTrasladoDto } from './dto/create-traslado.dto';
+import { EditPersonalDto } from 'src/personal/dto';
+import { Personal } from 'src/personal/entities/personal.entity';
+import { PersonalService } from '../personal/personal.service';
 
 @Injectable()
 export class TrasladoService {
     constructor(
         @InjectRepository(Traslado)
-        private readonly trasladoRepository: Repository<Traslado>
+        private readonly trasladoRepository: Repository<Traslado>,
+        // @InjectRepository(Personal)
+        //private readonly personalService:PersonalService
     ){}
 
     //LISTADO COMPLETO
@@ -156,5 +161,25 @@ export class TrasladoService {
         }
     }
     //FIN BORRAR UN TRASLADO............................................................
+
+
+    // async editPersonal(legajox:number, data: EditPersonalDto){
+    //     try {
+    //         if(data.foto){
+    //             throw new Error('La foto del personal  solo puede ser modificada por el servicio correspondiente!');
+    //         }
+                 
+        
+    //     const respuesta =  await this.personalRepository.update({legajo:legajox}, data);
+        
+    //     if (respuesta.affected == 0) throw new NotFoundException('Error: No se ha actualizado ningun registro')
+    //     return respuesta;
+            
+    //     } catch (error) {
+    //         throw new BadRequestException(error.message);
+    //     }
+                   
+         
+    // }
 
 }

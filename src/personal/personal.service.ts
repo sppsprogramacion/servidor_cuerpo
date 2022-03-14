@@ -134,6 +134,31 @@ async editOne(id:number, data: EditPersonalDto){
 }
 
 /**
+ * Servicio que edita un registro USUARIO según id
+ * @param id 
+ * @param data 
+ * @returns 
+ */
+ async editOneXLegajo(legajox:number, data: EditPersonalDto){
+    try {
+        if(data.foto){
+            throw new Error('La foto del personal  solo puede ser modificada por el servicio correspondiente!');
+        }
+             
+    
+    const respuesta =  await this.personalRepository.update({legajo:legajox}, data);
+    
+    if (respuesta.affected == 0) throw new NotFoundException('Error: No se ha actualizado ningun registro')
+    return respuesta;
+        
+    } catch (error) {
+        throw new BadRequestException(error.message);
+    }
+               
+     
+}
+
+/**
  * Servicio que elimina un registro USUARIO según ID
  * @param id 
  * @returns 
