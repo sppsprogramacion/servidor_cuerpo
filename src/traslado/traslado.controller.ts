@@ -84,16 +84,17 @@ export class TrasladoController {
             seccion_guardia_id: 1
         }        
         
-        this.personalService.editOneXLegajo(data.legajo,dataPersonal);
+        const respuesta =  await this.personalService.editOneXLegajo(data.legajo,dataPersonal);
         //Fin editar destino en el personal
-
+    
+        //EDICION DE CAMPO VIGENTE COMO FALSO EN TODOS LOS REGISTROS DE TRASLADO DE PERSONAL
         let data_aux: Partial<Traslado>= new Traslado;
         data_aux = {
             vigente:false
-        }      
+        }          
+        const respuesta2 = await this.trasladoService.quitarTrasladoVigente(data.legajo, data_aux);
 
-        this.trasladoService.quitarTrasladoVigente(data.legajo, data_aux);
-
+        //GUARDAR NUEVO TRASLADO
         return await this.trasladoService.createOne(data);
     }
 

@@ -119,12 +119,19 @@ export class TrasladoService {
 
     //QUITAR TRASLADO VIGENTE
     async quitarTrasladoVigente(legajox: number, data: EditTrasladoDto){
-        try {
-            return this.trasladoRepository.update({legajo:legajox},data)
+        const respuesta = await this.trasladoRepository.update({legajo:legajox},data);
+        
+        if (respuesta.affected == 0) throw new NotFoundException('Error: No se ha actualizado ningun registro')
+            return respuesta;
+            
+        
 
-        } catch (error) {
-              throw new BadRequestException(error.message);
-        }
+        // try {
+        //     return this.trasladoRepository.update({legajo:legajox},data)
+
+        // } catch (error) {
+        //       throw new BadRequestException(error.message);
+        // }
     }
     //FIN QUITAR TRASLADO VIGENTE
 

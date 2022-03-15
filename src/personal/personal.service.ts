@@ -134,7 +134,7 @@ async editOne(id:number, data: EditPersonalDto){
 }
 
 /**
- * Servicio que edita un registro USUARIO según id
+ * Servicio que edita un registro USUARIO según legajo
  * @param id 
  * @param data 
  * @returns 

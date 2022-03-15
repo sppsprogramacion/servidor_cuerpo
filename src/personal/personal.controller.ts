@@ -1,4 +1,4 @@
-import { Body, Get, Param, Put, Post, ParseIntPipe, Delete, UseInterceptors, UploadedFile, UnsupportedMediaTypeException, HttpException, HttpStatus, Req, BadRequestException, Patch, Res } from '@nestjs/common';
+import { Body, Get, Param, Put, Post, ParseIntPipe, Delete, UseInterceptors, UploadedFile, UnsupportedMediaTypeException, HttpException, HttpStatus, Req, BadRequestException, Patch, Res, NotFoundException } from '@nestjs/common';
 import { Controller } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -82,13 +82,16 @@ export class PersonalController {
 
     @Get('/dni/:dni')
     async getByDni(
-        @Param('dni',ParseIntPipe)
+        @Param('dni')
         dni:number
     ){
+        
         try {
             if(!dni){
                 throw new Error('Debe proporcionar el DNI');
             }else{
+
+                
                 //const dni: number = parseInt(req.query.dni.toString());
                 return await this.personalService.getPersonalByDni(dni);
                 
@@ -139,6 +142,17 @@ export class PersonalController {
         data: EditPersonalDto
     ){
         return await this.personalService.editOne(id, data);
+
+    }
+
+    @Put('/legajo/:legajo')
+    async editOneXLegajo(
+        @Param('legajo',ParseIntPipe)
+        legajo: number,
+        @Body()
+        data: EditPersonalDto
+    ){
+        return await this.personalService.editOneXLegajo(legajo, data);
 
     }
 
