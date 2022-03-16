@@ -145,11 +145,17 @@ async editOne(id:number, data: EditPersonalDto){
             throw new Error('La foto del personal  solo puede ser modificada por el servicio correspondiente!');
         }
              
-    
-    const respuesta =  await this.personalRepository.update({legajo:legajox}, data);
-    
-    if (respuesta.affected == 0) throw new NotFoundException('Error: No se ha actualizado ningun registro')
-    return respuesta;
+        const existe = await this.personalRepository.findOne({legajo: legajox});
+        if(!existe) throw new BadRequestException('El número de legajo no corresponde a un personal registrado');
+
+        const respuesta =  await this.personalRepository.update({legajo:legajox}, data);
+        
+        if (respuesta.affected == 0) throw new NotFoundException('Error: No se ha actualizado ningun registro del personal')
+        
+        return respuesta;
+
+        
+            
         
     } catch (error) {
         throw new BadRequestException(error.message);

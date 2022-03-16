@@ -84,7 +84,7 @@ export class TrasladoController {
             seccion_guardia_id: 1
         }        
         
-        const respuesta =  await this.personalService.editOneXLegajo(data.legajo,dataPersonal);
+        const respuesta_personal =  await this.personalService.editOneXLegajo(data.legajo,dataPersonal);
         //Fin editar destino en el personal
     
         //EDICION DE CAMPO VIGENTE COMO FALSO EN TODOS LOS REGISTROS DE TRASLADO DE PERSONAL
@@ -92,7 +92,8 @@ export class TrasladoController {
         data_aux = {
             vigente:false
         }          
-        const respuesta2 = await this.trasladoService.quitarTrasladoVigente(data.legajo, data_aux);
+        const respuesta_traslado = await this.trasladoService.quitarTrasladoVigente(data.legajo, data_aux);
+        //fin EDICION DE CAMPO VIGENTE COMO FALSO EN TODOS LOS REGISTROS DE TRASLADO DE PERSONAL
 
         //GUARDAR NUEVO TRASLADO
         return await this.trasladoService.createOne(data);
@@ -108,7 +109,7 @@ export class TrasladoController {
         return await this.trasladoService.editOne(id, data);
     }
 
-    @Put('/quitar/:legajo')
+    @Put('/quitar-vigente/:legajo')
     async quitarTrasladoVigente(
         @Param('legajo', ParseIntPipe)
         legajo: number,

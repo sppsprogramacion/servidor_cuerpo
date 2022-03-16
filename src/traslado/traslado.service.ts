@@ -118,20 +118,20 @@ export class TrasladoService {
     //FIN EDITAR UN TRASLADO.......................................................
 
     //QUITAR TRASLADO VIGENTE
-    async quitarTrasladoVigente(legajox: number, data: EditTrasladoDto){
-        const respuesta = await this.trasladoRepository.update({legajo:legajox},data);
-        
-        if (respuesta.affected == 0) throw new NotFoundException('Error: No se ha actualizado ningun registro')
+    async quitarTrasladoVigente(legajox: number, data: EditTrasladoDto){        
+
+        try {
+            const respuesta = await this.trasladoRepository.update({legajo:legajox},data);
+            if (respuesta.affected == 0) throw new NotFoundException('Error: No se ha quitado el estado vigente en traslados anteriores')
+            
             return respuesta;
             
+        } catch (error) {
+              throw new BadRequestException(error.message);
+        }          
         
 
-        // try {
-        //     return this.trasladoRepository.update({legajo:legajox},data)
-
-        // } catch (error) {
-        //       throw new BadRequestException(error.message);
-        // }
+        
     }
     //FIN QUITAR TRASLADO VIGENTE
 
@@ -144,14 +144,11 @@ export class TrasladoService {
      */
     async createOne(data: CreateTrasladoDto){
         try {
-            // const auxiliar = await this.trasladoRepository.findOne({where: [{sector: data.sector}]})
-            // if(auxiliar){
-            //     throw new BadRequestException('Ya existe un sector con esta denominación');
-            // }
             const nuevo = this.trasladoRepository.create(data);
             return await this.trasladoRepository.save(nuevo);
         } catch (error) {
-            }
+            throw new BadRequestException(error.message);
+        }
     }
     //FIN CREAR UN TRASLADO...........................................
 
