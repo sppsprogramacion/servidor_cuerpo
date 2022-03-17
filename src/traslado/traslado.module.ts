@@ -14,5 +14,6 @@ import { PersonalModule } from 'src/personal/personal.module';
     ],
     providers: [TrasladoService],
     controllers: [TrasladoController],
+    exports: [TrasladoService]
 })
 export class TrasladoModule {}

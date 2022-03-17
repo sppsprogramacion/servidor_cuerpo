@@ -37,6 +37,23 @@ export class TrasladoController {
         return await this.trasladoService.getTrasladosXLegajo(legajox);
     }
 
+    @Get('/vigente/legajo/:legajo')
+    async getTrasladoVigenteXLegajo(        
+        @Param('legajo')
+        legajo: number
+    ){        
+        let legajox:number=0;
+        
+        if(Number.isInteger(legajo)){
+            legajox = legajo;
+        }
+        else{
+            throw new NotFoundException('Debe proporcionar un numero entero para el Legajo');
+        }    
+                
+        return await this.trasladoService.getTrasladoVigenteXLegajo(legajox);
+    }
+
     @Get('/nuevos/')
     async getNuevosTrasladosTodos(){             
                 
@@ -94,8 +111,10 @@ export class TrasladoController {
         }          
         const respuesta_traslado = await this.trasladoService.quitarTrasladoVigente(data.legajo, data_aux);
         //fin EDICION DE CAMPO VIGENTE COMO FALSO EN TODOS LOS REGISTROS DE TRASLADO DE PERSONAL
-
+        
         //GUARDAR NUEVO TRASLADO
+        data.vigente=true;
+        data.confirmado=false;
         return await this.trasladoService.createOne(data);
     }
 
@@ -103,6 +122,7 @@ export class TrasladoController {
     async editOne(
         @Param('id', ParseIntPipe)
         id: number,
+
         @Body()
         data: EditTrasladoDto
     ){

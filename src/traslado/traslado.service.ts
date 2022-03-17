@@ -51,6 +51,25 @@ export class TrasladoService {
     }
     //FIN TRASLADO X LEGAJO.......................................................
 
+    //TRASLADO VIGENTE X LEGAJO
+    async getTrasladoVigenteXLegajo(legajox: number){
+        try {
+            return await this.trasladoRepository.findOne({
+                    where: [{legajo: legajox, vigente: true}]
+                });
+            // if(!existe){
+            //     throw new Error('No se encontro un traslado vigente');
+            // }
+            //return await this.trasladoRepository.findOneOrFail({legajo: legajox});
+
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+
+        
+    }
+    //FIN TRASLADO X LEGAJO.......................................................
+
     //LISTADO NUEVOS TRASLADO TODOS
     async getNuevosTrasladosTodos(){
         try {

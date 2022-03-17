@@ -2,11 +2,18 @@ import { Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, 
 import { PersonalFuncionService } from './personal-funcion.service';
 import { CreatePersonalFuncionDto } from './dto/create-personal-funcion.dto';
 import { EditPersonalFuncionDto } from './dto/edit-personal-funcion.dto';
+import { TrasladoService } from '../traslado/traslado.service';
+import { Traslado } from '../traslado/entities/traslado.entity';
+import { Personal } from 'src/personal/entities/personal.entity';
+import { PersonalService } from '../personal/personal.service';
+import { PersonalFuncion } from './entities/personal-funcion.entity';
 
 @Controller('personal-funcion')
 export class PersonalFuncionController {
     constructor(
-        private readonly personalFuncionService: PersonalFuncionService
+        private readonly personalFuncionService: PersonalFuncionService,
+        private readonly trasladoService: TrasladoService,
+        private readonly personalService: PersonalService
     ){}
 
     @Get()
@@ -44,7 +51,44 @@ export class PersonalFuncionController {
         @Body()
         data: CreatePersonalFuncionDto
     ){
-        return await this.personalFuncionService.createOne(data);
+
+        const respuesta_traslado= await this.trasladoService.getTrasladoVigenteXLegajo(data.legajo);
+        if(respuesta_traslado){
+            if(respuesta_traslado.confirmado==false){
+                throw new NotFoundException('Debe confirmar el traslado para asignar una función');
+            }
+            else{
+                //editar destino en el personal
+                let dataPersonal: Partial<Personal>= new Personal;
+                dataPersonal = {
+                    destino_id: data.destino_id,
+                    departamento_id: data.departamento_id,
+                    division_id: data.division_id,
+                    sector_id: data.sector_id,
+                    funcion_id:data.funcion_id,
+                    seccion_guardia_id: data.seccion_guardia_id,
+                }        
+                
+                const respuesta_personal =  await this.personalService.editOneXLegajo(data.legajo,dataPersonal);
+                //Fin editar destino en el personal
+
+                //EDICION DE CAMPO VIGENTE COMO FALSO EN TODOS LOS REGISTROS DE TRASLADO DE PERSONAL
+                let data_aux: EditPersonalFuncionDto
+                data_aux = {
+                    vigente:false
+                }          
+                const respuesta_traslado = await this.personalFuncionService.quitarFuncionVigente(data.legajo, data_aux);
+                //fin EDICION DE CAMPO VIGENTE COMO FALSO EN TODOS LOS REGISTROS DE TRASLADO DE PERSONAL
+
+                data.vigente=true;
+                return await this.personalFuncionService.createOne(data);
+            }
+        }
+        else{
+            throw new NotFoundException('No se encontro un traslado vigente o el legajo esta mal ingresado');
+        }
+        
+        // return await this.personalFuncionService.createOne(data);
     }
 
     @Put(':id')
