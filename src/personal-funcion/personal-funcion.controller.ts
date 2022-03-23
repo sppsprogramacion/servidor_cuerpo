@@ -72,13 +72,16 @@ export class PersonalFuncionController {
                 const respuesta_personal =  await this.personalService.editOneXLegajo(data.legajo,dataPersonal);
                 //Fin editar destino en el personal
 
-                //EDICION DE CAMPO VIGENTE COMO FALSO EN TODOS LOS REGISTROS DE TRASLADO DE PERSONAL
+
+
+                
+                //EDICION DE CAMPO VIGENTE COMO FALSO EN TODOS LOS REGISTROS DE FUNCION DE PERSONAL
                 let data_aux: EditPersonalFuncionDto
                 data_aux = {
                     vigente:false
                 }          
                 const respuesta_traslado = await this.personalFuncionService.quitarFuncionVigente(data.legajo, data_aux);
-                //fin EDICION DE CAMPO VIGENTE COMO FALSO EN TODOS LOS REGISTROS DE TRASLADO DE PERSONAL
+                //fin EDICION DE CAMPO VIGENTE COMO FALSO EN TODOS LOS REGISTROS DE FUNCION DE PERSONAL
 
                 data.vigente=true;
                 return await this.personalFuncionService.createOne(data);

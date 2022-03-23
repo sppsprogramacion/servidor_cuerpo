@@ -5,12 +5,14 @@ import { TrasladoService } from './traslado.service';
 import { TrasladoController } from './traslado.controller';
 import { PersonalModule } from 'src/personal/personal.module';
 
+
 @Module({
     imports: [
         TypeOrmModule.forFeature([
             Traslado
         ]),
-        PersonalModule
+        PersonalModule,
+        //PersonalFuncionModule
     ],
     providers: [TrasladoService],
     controllers: [TrasladoController],

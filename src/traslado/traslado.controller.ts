@@ -6,6 +6,8 @@ import { get } from 'http';
 import { PersonalService } from '../personal/personal.service';
 import { Personal } from 'src/personal/entities/personal.entity';
 import { Traslado } from './entities/traslado.entity';
+import { PersonalFuncionService } from '../personal-funcion/personal-funcion.service';
+import { EditPersonalFuncionDto } from 'src/personal-funcion/dto';
 
 
 @Controller('traslado')
@@ -111,6 +113,15 @@ export class TrasladoController {
         }          
         const respuesta_traslado = await this.trasladoService.quitarTrasladoVigente(data.legajo, data_aux);
         //fin EDICION DE CAMPO VIGENTE COMO FALSO EN TODOS LOS REGISTROS DE TRASLADO DE PERSONAL
+
+        //EDICION DE CAMPO VIGENTE COMO FALSO EN TODOS LOS REGISTROS DE FUNCION DE PERSONAL
+        // let data_aux2: EditPersonalFuncionDto
+        // data_aux2 = {
+        //     vigente:false
+        // }          
+        // const respuesta_funcion= await this.personalFuncionService.quitarFuncionVigente(data.legajo, data_aux);
+        //fin EDICION DE CAMPO VIGENTE COMO FALSO EN TODOS LOS REGISTROS DE FUNCION DE PERSONAL
+        
         
         //GUARDAR NUEVO TRASLADO
         data.vigente=true;
