@@ -140,8 +140,9 @@ export class TrasladoService {
     async quitarTrasladoVigente(legajox: number, data: EditTrasladoDto){        
 
         try {
+            const cantidad = await this.trasladoRepository.count({legajo:legajox});
             const respuesta = await this.trasladoRepository.update({legajo:legajox},data);
-            if (respuesta.affected == 0) throw new NotFoundException('Error: No se ha quitado el estado vigente en traslados anteriores')
+            if (cantidad > 0 && respuesta.affected == 0) throw new NotFoundException('Error: No se ha quitado el estado vigente en traslados anteriores')
             
             return respuesta;
             
