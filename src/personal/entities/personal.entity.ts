@@ -354,6 +354,13 @@ export class  Personal {
     peso: number;
 
     @Column({
+        type: "varchar",
+        length: 15,
+        nullable: true
+             })
+    grupo_sanguineo : string;
+
+    @Column({
         type: "int",
         nullable: false
              })

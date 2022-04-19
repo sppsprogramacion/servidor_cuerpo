@@ -127,6 +127,11 @@ export class CreatePersonalDto {
     @IsOptional()
     peso: number;
 
+    @IsString()
+    @Length(2,15,{message:'El grupo sanguineo debe tener entre $constraint1 y $constraint2 caracteres'})
+    @IsOptional()clear
+    grupo_sanguineo : string;
+
     @IsInt({message:'El nivel educativo es una clave entera'})
     nivel_educativo_id: number;
 
