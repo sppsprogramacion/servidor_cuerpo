@@ -3,7 +3,7 @@ import { Destino } from "src/destino/entities/destino.entity";
 import { Division } from "src/division/entities/division.entity";
 import { Sector } from "src/sector/entities/sector.entity";
 import { Sexo } from "src/sexo/entities/sexo.entity";
-import { Entity, PrimaryGeneratedColumn, Column, DeleteDateColumn, BeforeInsert, BeforeUpdate, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, DeleteDateColumn, BeforeInsert, BeforeUpdate, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 import { EstadoCivil } from '../../estado-civil/entities/estado-civil.entity';
 import { SeccionGuardia } from '../../seccion-guardia/entities/seccion-guardia.entity';
 import { Escalafon } from '../../escalafon/entities/escalafon.entity';
@@ -17,6 +17,7 @@ import { Provincia } from '../../provincia/entities/provincia.entity';
 import { Situacion } from '../../situacion/entities/situacion.entity';
 import { Archivo } from "src/archivo/entities/archivo.entity";
 import { Funcion } from "src/funcion/entities/funcion.entity";
+import { Traslado } from '../../traslado/entities/traslado.entity';
 
 /**
  * Tabla que contiene los datos de todo el personal penitenciario 
@@ -131,6 +132,7 @@ export class  Personal {
     })
     estado_civil: EstadoCivil;
 
+    //DESTINO
     @Column({
         type: "int",
         //el valor default 8 corresponde a "sin destino" si ese registro cambia debe corregirse este default
@@ -144,7 +146,8 @@ export class  Personal {
         referencedColumnName: 'id_destino'
     })
     destino: Destino;
-
+    //FIN DESTINO
+   
     @Column({
         type: "int",
         //el valor default 3 corresponde a "sin departamento" si ese registro cambia debe corregirse este default

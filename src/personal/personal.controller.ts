@@ -130,7 +130,16 @@ export class PersonalController {
         @Body()
         personalDto: CreatePersonalDto
     ){
-                
+        personalDto.destino_id = 8;
+        personalDto.departamento_id = 3;
+        personalDto.division_id = 1;
+        personalDto.sector_id = 1;
+        personalDto.seccion_guardia_id = 1;
+        personalDto.funcion_id = 1;
+        personalDto.escala_jerarquica_id = 2;
+        personalDto.escalafon_id = 1;
+        personalDto.grado_id= 1;      
+
         return await this.personalService.createOne(personalDto);
     }
 

@@ -1,4 +1,6 @@
 import { Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Personal } from 'src/personal/entities/personal.entity';
+import { PersonalService } from 'src/personal/personal.service';
 import { AscensoService } from './ascenso.service';
 import { CreateAscensoDto } from './dto/create-ascenso-dto';
 import { EditAscensoDto } from './dto/edit-ascenso-dto';
@@ -7,7 +9,8 @@ import { Ascenso } from './entities/ascenso.entity';
 @Controller('ascenso')
 export class AscensoController {
     constructor(
-        private readonly ascensoService: AscensoService
+        private readonly ascensoService: AscensoService,
+        private readonly personalService: PersonalService
     ){}
 
      /**
@@ -73,6 +76,18 @@ export class AscensoController {
             console.log("lista ascensos", await this.ascensoService.getAscensosXLegajo(data.legajo));
             
         }
+
+
+        //EDICION DE GRADO  EN EL PERSONAL
+        let dataPersonal: Partial<Personal>= new Personal;
+        dataPersonal = {
+            grado_id: data.grado_id,
+            escalafon_id: data.escalafon_id,
+            escala_jerarquica_id: 2
+        }        
+        
+        const respuesta_personal =  await this.personalService.editOneXLegajo(data.legajo,dataPersonal);
+        //Fin EDICION DE GRADO  EN EL PERSONAL
         
         //EDICION DE CAMPO VIGENTE COMO FALSO EN TODOS LOS REGISTROS DE ASCENSO DE PERSONAL
         let data_aux: Partial<Ascenso>= new Ascenso;
