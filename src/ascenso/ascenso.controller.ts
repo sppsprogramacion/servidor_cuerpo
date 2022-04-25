@@ -13,14 +13,16 @@ export class AscensoController {
         private readonly personalService: PersonalService
     ){}
 
-     /**
+        /**
      * Petición http que lista todos los registros
      * @returns 
      */
-      @Get()
-      async getAll(){
-          return await this.ascensoService.getAll();
-      }
+    @Get()
+    async getAll(){
+        return await this.ascensoService.getAll();
+    }
+    //..................................................
+
 
       /**
      * Petición http que devuelve un registro según id
@@ -41,11 +43,11 @@ export class AscensoController {
      * @param data 
      * @returns 
      */
-     @Post()
-     async create(
-         @Body()
-         data: CreateAscensoDto
-     ){
+    @Post()
+    async create(
+        @Body()
+        data: CreateAscensoDto
+    ){
         //LISTA DE ASCENSO PARA REORDENAR
         let ascenso_vigente: Partial<Ascenso> = new Ascenso;
         let ascenso_aux: Partial<Ascenso> = new Ascenso;
@@ -53,13 +55,16 @@ export class AscensoController {
         let orden_actualizar: number=0;
         ascenso_vigente = await this.ascensoService.getAscensoVigenteXLegajo(data.legajo);
         if (ascenso_vigente){
-            list_ascensos = await this.ascensoService.getAscensosVigentesReOrdenar(ascenso_vigente.orden, ascenso_vigente.grado_id);
+            list_ascensos = await this.ascensoService.getAscensosVigentesReOrdenar(ascenso_vigente.orden, ascenso_vigente.grado_id, ascenso_vigente.escalafon_id);
             orden_actualizar = ascenso_vigente.orden;
             for (let ascenso of list_ascensos){
                 console.log("ascenso", ascenso);
                 //EDICION DE NUMERO DE ORDEN 
                 ascenso_aux = {
-                    orden: orden_actualizar
+                    orden: orden_actualizar,
+                    anio_orden: data.anio,
+                    instrumento_orden: data.instrumento_orden,
+                    fecha_instrumento_orden: data.fecha_instrumento_orden
                 }          
                 const respuesta_orden = await this.ascensoService.editOne(ascenso.id_ascenso, ascenso_aux);
                 //EDICION DE NUMERO DE ORDEN 
@@ -76,8 +81,8 @@ export class AscensoController {
             console.log("lista ascensos", await this.ascensoService.getAscensosXLegajo(data.legajo));
             
         }
-
-
+    
+    
         //EDICION DE GRADO  EN EL PERSONAL
         let dataPersonal: Partial<Personal>= new Personal;
         dataPersonal = {
@@ -96,12 +101,12 @@ export class AscensoController {
         }          
         const respuesta_traslado = await this.ascensoService.quitarAscensoVigente(data.legajo, data_aux);
         //fin EDICION DE CAMPO VIGENTE COMO FALSO EN TODOS LOS REGISTROS DE ASCENSO DE PERSONAL
-
+    
         //GUARDAR NUEVO ASCENSO
         data.vigente=true;
         return await this.ascensoService.createOne(data);
-     }
-     //..................................................................................................
+    }
+    //..................................................................................................
 
      /**
      * Petición http que edita un registro según id
@@ -118,18 +123,19 @@ export class AscensoController {
     ){
         return await this.ascensoService.editOne(id, data);
     }
-    //........................................................
+    //....................................................................................
 
      /**
      * Petición http que elimina un registro según id
      * @param id 
      * @returns 
      */
-      @Delete(':id')
-      async deleteOne(
-          @Param('id', ParseIntPipe)
-          id: number
-      ){
-          return await this.ascensoService.deleteOne(id);
-      }
+    @Delete(':id')
+    async deleteOne(
+        @Param('id', ParseIntPipe)
+        id: number
+    ){
+        return await this.ascensoService.deleteOne(id);
+    }
+    //..............................................................................
 }

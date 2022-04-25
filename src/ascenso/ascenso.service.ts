@@ -4,6 +4,7 @@ import { MoreThan, Repository } from 'typeorm';
 import { Ascenso } from './entities/ascenso.entity';
 import { EditAscensoDto } from './dto/edit-ascenso-dto';
 import { CreateAscensoDto } from './dto/create-ascenso-dto';
+import { number } from 'joi';
 
 @Injectable()
 export class AscensoService {
@@ -68,11 +69,11 @@ export class AscensoService {
     //FIN ASCENSO VIGENTE X LEGAJO.......................................................
 
     //ASCENSO VIGENTE X LEGAJO
-    async getAscensosVigentesReOrdenar(ordenx: number, gradox: number){
+    async getAscensosVigentesReOrdenar(ordenx: number, gradox: number, escalafonx: number){
         try {
             return await this.ascensoRepository.find({
                     where: [
-                        {grado_id: gradox, orden: MoreThan (ordenx), vigente:true}
+                        {grado_id: gradox, orden: MoreThan (ordenx), escalafon_id: escalafonx,vigente:true}
                     ],
                     order:{
                         orden: "ASC"

@@ -79,7 +79,7 @@ export class Ascenso {
     @Column({
         type: "int"
            })
-    anio: number;
+    anio_orden: number;
 
     @Column({
         type: "varchar",
