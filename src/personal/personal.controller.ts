@@ -136,9 +136,9 @@ export class PersonalController {
         personalDto.sector_id = 1;
         personalDto.seccion_guardia_id = 1;
         personalDto.funcion_id = 1;
-        personalDto.escala_jerarquica_id = 2;
-        personalDto.escalafon_id = 1;
-        personalDto.grado_id= 1;      
+        personalDto.escala_jerarquica_id = 3;
+        personalDto.escalafon_id = 3;
+        personalDto.grado_id= 18;      
 
         return await this.personalService.createOne(personalDto);
     }

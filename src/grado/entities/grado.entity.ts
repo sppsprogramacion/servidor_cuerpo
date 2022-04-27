@@ -1,4 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { EscalaJerarquica } from 'src/escala-jerarquica/entities/escala-jerarquica.entity';
+import { Jerarquia } from '../../jerarquia/entities/jerarquia.entity';
 
 /**
  * Tabla que contiene las opciones de grado (cabo, sargento, alcaide, etc)
@@ -15,15 +17,16 @@ export class  Grado {
         unique: true
            })
     grado: string;
-
+    
     @Column({
         type: "int",
             })
-    escala_jerarquica_id : number;
-
+    escala_jerarquica_id : number; 
+    
     @Column({
         type: "int",
             })
-    jerarquia_id : number;
-
-        }
+    jerarquia_id : number;    
+    
+}
+    
