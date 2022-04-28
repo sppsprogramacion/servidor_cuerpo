@@ -45,6 +45,8 @@ export class AscensoController {
      */
     @Post()
     async create(
+        @Param('id_escala',ParseIntPipe)
+        id_escala: number,
         @Body()
         data: CreateAscensoDto
     ){
@@ -62,15 +64,14 @@ export class AscensoController {
                 //EDICION DE NUMERO DE ORDEN 
                 ascenso_aux = {
                     orden: orden_actualizar,
-                    anio_orden: data.anio,
+                    anio_orden: data.anio_orden,
                     instrumento_orden: data.instrumento_orden,
                     fecha_instrumento_orden: data.fecha_instrumento_orden
                 }          
                 const respuesta_orden = await this.ascensoService.editOne(ascenso.id_ascenso, ascenso_aux);
                 //EDICION DE NUMERO DE ORDEN 
                 orden_actualizar= orden_actualizar + 1
-            }
-            
+            }            
         }
         else{            
             let aux = await this.ascensoService.getAscensosXLegajo(data.legajo);
@@ -88,7 +89,7 @@ export class AscensoController {
         dataPersonal = {
             grado_id: data.grado_id,
             escalafon_id: data.escalafon_id,
-            escala_jerarquica_id: 2
+            escala_jerarquica_id: id_escala
         }        
         
         const respuesta_personal =  await this.personalService.editOneXLegajo(data.legajo,dataPersonal);

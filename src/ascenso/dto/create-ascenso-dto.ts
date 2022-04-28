@@ -32,7 +32,7 @@ export class CreateAscensoDto {
     
     @IsInt({message:'El anio debe ser una clave entera'})
     @Min(1000,{message:'El valor que intenta asignar a año no es válido'})
-    anio: number;
+    anio_orden: number;
 
     @IsString()
     @Length(1,100,{message:'El instrumento del orden debe tener entre $constraint1 y $constraint2 caracteres'})
