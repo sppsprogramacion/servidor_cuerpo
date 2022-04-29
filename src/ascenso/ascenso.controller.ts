@@ -44,11 +44,11 @@ export class AscensoController {
      * @returns 
      */
     @Post()
-    async create(
-        @Param('id_escala',ParseIntPipe)
-        id_escala: number,
+    async create(   
+        @Param('id_escala') id_escala: number,    
         @Body()
-        data: CreateAscensoDto
+        data: CreateAscensoDto,
+        
     ){
         //LISTA DE ASCENSO PARA REORDENAR
         let ascenso_vigente: Partial<Ascenso> = new Ascenso;
@@ -89,8 +89,9 @@ export class AscensoController {
         dataPersonal = {
             grado_id: data.grado_id,
             escalafon_id: data.escalafon_id,
-            escala_jerarquica_id: id_escala
+            escala_jerarquica_id: 2
         }        
+        console.log("escala", id_escala);
         
         const respuesta_personal =  await this.personalService.editOneXLegajo(data.legajo,dataPersonal);
         //Fin EDICION DE GRADO  EN EL PERSONAL
