@@ -1,10 +1,12 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Post, Put, Req } from '@nestjs/common';
 import { Personal } from 'src/personal/entities/personal.entity';
 import { PersonalService } from 'src/personal/personal.service';
 import { AscensoService } from './ascenso.service';
 import { CreateAscensoDto } from './dto/create-ascenso-dto';
 import { EditAscensoDto } from './dto/edit-ascenso-dto';
 import { Ascenso } from './entities/ascenso.entity';
+import {Request} from 'express';
+import * as request from 'supertest';
 
 @Controller('ascenso')
 export class AscensoController {
@@ -40,17 +42,26 @@ export class AscensoController {
 
     /**
      * Petición http que crea un nuevo registro
+     * @param escala 
      * @param data 
      * @returns 
      */
     @Post()
     async create(   
-        @Param('id_escala') id_escala: number,    
+        // @Param('id_escala') id_escala: string,  
+        @Req()
+        req: Request,  
         @Body()
-        data: CreateAscensoDto,
+        data: CreateAscensoDto
+
         
     ){
+        if(req.query.id_escala === null){
+            throw new Error('Debe proporcionar la escala jerarquica del personal');
+        }
+        const id_escala: number = parseInt(req.query.id_escala.toString());
         //LISTA DE ASCENSO PARA REORDENAR
+        console.log("ascenso enviado", data);
         let ascenso_vigente: Partial<Ascenso> = new Ascenso;
         let ascenso_aux: Partial<Ascenso> = new Ascenso;
         let list_ascensos: Ascenso[] = [];
@@ -89,7 +100,7 @@ export class AscensoController {
         dataPersonal = {
             grado_id: data.grado_id,
             escalafon_id: data.escalafon_id,
-            escala_jerarquica_id: 2
+            escala_jerarquica_id: id_escala
         }        
         console.log("escala", id_escala);
         
