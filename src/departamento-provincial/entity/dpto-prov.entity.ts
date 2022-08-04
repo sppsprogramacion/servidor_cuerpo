@@ -17,7 +17,8 @@ export class DepartamentoProvincial {
         length: 50, 
           })
     departamento_provincial: string;
-
+    
+    //PROVINCIA
     @Column({
         type: "int",
         nullable: false
@@ -30,7 +31,8 @@ export class DepartamentoProvincial {
         referencedColumnName: "id_provincia"
     })
     provincia: Provincia;
-
+    //FIN PROVINCIA
+    
     // @OneToMany(type => Municipio,muni => muni.departamento,{
     //     onDelete: "CASCADE",
     //     eager: true,
