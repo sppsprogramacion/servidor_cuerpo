@@ -66,16 +66,23 @@ export class AscensoController {
         let ascenso_aux: Partial<Ascenso> = new Ascenso;
         let list_ascensos: Ascenso[] = [];
         let orden_actualizar: number=0;
+        let fecha_instrumento: Date = new Date(data.fecha_instrumento_orden);
+        let anio: number = 0;
+        
+        //anio = data.fecha_ascenso.getFullYear();
+        data.anio_orden = fecha_instrumento.getFullYear();
         ascenso_vigente = await this.ascensoService.getAscensoVigenteXLegajo(data.legajo);
+        console.log("ascenso vigente", ascenso_vigente);
         if (ascenso_vigente){
             list_ascensos = await this.ascensoService.getAscensosVigentesReOrdenar(ascenso_vigente.orden, ascenso_vigente.grado_id, ascenso_vigente.escalafon_id);
+            console.log("lista ascensos vifentes", list_ascensos);
             orden_actualizar = ascenso_vigente.orden;
             for (let ascenso of list_ascensos){
                 console.log("ascenso", ascenso);
                 //EDICION DE NUMERO DE ORDEN 
                 ascenso_aux = {
                     orden: orden_actualizar,
-                    anio_orden: data.anio_orden,
+                    anio_orden: fecha_instrumento.getFullYear(),
                     instrumento_orden: data.instrumento_orden,
                     fecha_instrumento_orden: data.fecha_instrumento_orden
                 }          
