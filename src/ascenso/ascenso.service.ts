@@ -68,6 +68,25 @@ export class AscensoService {
     }
     //FIN ASCENSO VIGENTE X LEGAJO.......................................................
 
+    //ASCENSO VIGENTE X FECHA
+    async getAscensoVigenteXFecha(fecha_ascensox: Date){
+        try {
+            return await this.ascensoRepository.findAndCount({
+                    where: [{fecha_ascenso: fecha_ascensox, vigente: true}]
+                });
+            // if(!existe){
+            //     throw new Error('No se encontro un traslado vigente');
+            // }
+            //return await this.trasladoRepository.findOneOrFail({legajo: legajox});
+
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+
+        
+    }
+    //FIN ASCENSO VIGENTE X LEGAJO.......................................................
+
     //ASCENSO VIGENTE X LEGAJO
     async getAscensosVigentesReOrdenar(ordenx: number, gradox: number, escalafonx: number){
         try {

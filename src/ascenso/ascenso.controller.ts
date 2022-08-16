@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Post, Put, Req } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Post, Put, Req } from '@nestjs/common';
 import { Personal } from 'src/personal/entities/personal.entity';
 import { PersonalService } from 'src/personal/personal.service';
 import { AscensoService } from './ascenso.service';
@@ -24,6 +24,26 @@ export class AscensoController {
         return await this.ascensoService.getAll();
     }
     //..................................................
+
+    //NUEVOS ASCENSOS CARGADOS POR FECHA
+    @Get('nuevos-ascensos')
+    async getNuevosAscensos(     
+        @Req()
+         req: Request,  
+    ){        
+        let fecha_ascensox: Date;
+        try {
+            if(!req.query.fecha_ascenso){
+                throw new Error('Debe proporcionar la fecha de ascenso');
+            }
+            fecha_ascensox = new Date(req.query.fecha_ascenso.toString() + "T00:00:00");
+        } catch (error) {
+            throw new BadRequestException(error.message);
+        }
+        
+        return await this.ascensoService.getAscensoVigenteXFecha(fecha_ascensox);
+    }
+    //FIN NUEVOS ASCENSOS CARGADOS POR FECHA
 
 
       /**
@@ -52,9 +72,7 @@ export class AscensoController {
         @Req()
         req: Request,  
         @Body()
-        data: CreateAscensoDto
-
-        
+        data: CreateAscensoDto        
     ){
         if(req.query.id_escala === null){
             throw new Error('Debe proporcionar la escala jerarquica del personal');
@@ -66,13 +84,16 @@ export class AscensoController {
         let ascenso_aux: Partial<Ascenso> = new Ascenso;
         let list_ascensos: Ascenso[] = [];
         let orden_actualizar: number=0;
-        let fecha_instrumento: Date = new Date(data.fecha_instrumento_orden);
+        let fecha_instrumento: Date = new Date(data.fecha_instrumento_orden + "T00:00:00");
         let anio: number = 0;
         
-        //anio = data.fecha_ascenso.getFullYear();
         data.anio_orden = fecha_instrumento.getFullYear();
         ascenso_vigente = await this.ascensoService.getAscensoVigenteXLegajo(data.legajo);
         console.log("ascenso vigente", ascenso_vigente);
+        console.log("fecha instrumento", fecha_instrumento);
+        console.log("año instrumento", fecha_instrumento.getFullYear());
+        console.log("mes instrumento", fecha_instrumento.getMonth());
+        console.log("dia instrumento", fecha_instrumento.getDate());
         if (ascenso_vigente){
             list_ascensos = await this.ascensoService.getAscensosVigentesReOrdenar(ascenso_vigente.orden, ascenso_vigente.grado_id, ascenso_vigente.escalafon_id);
             console.log("lista ascensos vifentes", list_ascensos);
