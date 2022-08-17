@@ -27,7 +27,7 @@ export class CreateAscensoDto {
     vigente: boolean;
 
     @IsInt({message:'El orden debe ser una clave entera'})
-    @Min(1,{message:'El valor que intenta asignar a Legajo no es válido'})
+    @Min(1,{message:'El valor que intenta asignar a Orden es muy bajo, no es válido'})
     orden: number;
     
     @IsInt({message:'El anio debe ser una clave entera'})

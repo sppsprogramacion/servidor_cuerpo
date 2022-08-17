@@ -162,6 +162,8 @@ export class AscensoService {
      */
      async createOne(data: CreateAscensoDto){
         try {
+            
+
             const nuevo = this.ascensoRepository.create(data);
             return await this.ascensoRepository.save(nuevo);
         } catch (error) {
