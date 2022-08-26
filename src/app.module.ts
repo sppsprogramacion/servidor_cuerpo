@@ -45,16 +45,20 @@ import * as Joi from 'joi';
       useFactory: (config: ConfigService) => 
       config.get<TypeOrmModuleOptions>(TYPEORM_CONFIG)
     }),
-    ConfigModule.forRoot({
-      isGlobal: true,
-      load: [databaseConfig],
-      envFilePath: `.env.${process.env.NODE_ENV || 'development'}`, // .env.development
-      validationSchema: Joi.object({ 
-        NODE_ENV: Joi.string()
-          .valid('development', 'production')
-          .default('development')
-      }),
-    }),
+
+    //quitado provisorio
+    // ConfigModule.forRoot({
+    //   isGlobal: true,
+    //   load: [databaseConfig],
+    //   envFilePath: `.env.${process.env.NODE_ENV || 'development'}`, // .env.development
+    //   validationSchema: Joi.object({ 
+    //     NODE_ENV: Joi.string()
+    //       .valid('development', 'production')
+    //       .default('development')
+    //   }),
+    // }),
+
+
     //   inject: [ConfigService],
     //   useFactory: (config: ConfigService) => ({
     //     type: 'mysql',
@@ -72,6 +76,8 @@ import * as Joi from 'joi';
     // }),
   ConfigModule.forRoot({
     isGlobal: true,
+    //provisorio
+    load: [databaseConfig],
     envFilePath: '.env'
   }),
     UsuarioModule,
