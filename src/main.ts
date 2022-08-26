@@ -10,7 +10,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configOrm = app.get(ConfigService);
   const configService = app.get(ConfigService);
-  const port = parseInt(configService.get<string>(SERVER_PORT), 10) || 3000;
+  //const port = parseInt(configService.get<string>(SERVER_PORT), 10) || 3000;
 
   generateTypeormConfigFile(configOrm);
 
@@ -53,7 +53,8 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.enableCors();
-  await app.listen(port);
+  //await app.listen(port);
+  await app.listen(process.env.PORT);
   const logger = new Logger();
   logger.log(`corriendo el servidor ${await app.getUrl()}`);
 }
