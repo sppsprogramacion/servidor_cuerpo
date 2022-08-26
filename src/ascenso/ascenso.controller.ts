@@ -164,7 +164,7 @@ export class AscensoController {
     ){
         return await this.ascensoService.editOne(id, data);
     }
-    //....................................................................................
+    //......................................................................................
 
      /**
      * Petición http que elimina un registro según id
