@@ -80,6 +80,16 @@ export class PersonalController {
     //     }
     // }
 
+    @Get('datos-credencial')
+    async getdatosCredencial(
+        @Req()
+        req: Request
+    ){
+        let legajo: number = parseInt(req.query.legajo.toString());
+        if(isNaN(legajo)) throw new NotFoundException("El legajo del personal debe ser un número entero");
+        return this.personalService.getDatosCredencial(legajo);
+    }
+
     @Get('/dni/:dni')
     async getByDni(
         @Param('dni')

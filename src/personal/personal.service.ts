@@ -218,6 +218,25 @@ async getPersonalByLegajo(legajo: number){
     
 }
 
+//RETORNA DATOS DE LA CREDENCIAL
+async getDatosCredencial(legajo: number){
+    try {
+        return await this.personalRepository.findOneOrFail(
+            {
+                select:[
+                    'id_personal','apellido_1', 'apellido_2',  'nombre_1', 'nombre_2','nombre_3','legajo','nacionalidad','fecha_nacimiento','cuil','grupo_sanguineo'
+                ],
+                relations: ['destino','departamento','division','sector','seccion_guardia','funcion', 'escalafon', 'escala_jerarquica','grado','sexo'],
+                where: [{legajo}]
+            }
+        );
+        
+    } catch (error) {
+       throw new NotFoundException(error + ' No existe el personal buscado');
+    }
+   
+}
+
 /**
  * Servicio que carga la foto de un personal según id
  * utiliza un parámetro nombre de foto para la ruta
